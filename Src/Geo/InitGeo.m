@@ -15,14 +15,25 @@ function [Geo, Set] = InitGeo(Geo, Set)
 
 	%% Build nodal mesh 
 	X = BuildTopo(Geo.nx, Geo.ny);
-	Geo.nCells = size(X,1);
 
 	%% Centre Nodal position at (0,0)
 	X(:,1)=X(:,1)-mean(X(:,1));
 	X(:,2)=X(:,2)-mean(X(:,2));
 
 	%% Perform Delaunay
-	Twg=delaunay(X);
+	Twg = delaunay(X);
+	% Define as ghost nodes those at the boundary
+	% TODO FIXME ;(
+	Geo.XgID = X(:,1)==max(X(:,1)) | X(:,1)==min(X(:,1)) | X(:,2)==max(X(:,2)) | X(:,2)==min(X(:,2));
+	Geo.nCells = size(X(~Geo.XgID,:),1);
+	
+	X = [X(~Geo.XgID,:); X(Geo.XgID,:)];
+	idxs = 1:size(X, 1);
+	idxs(Geo.XgID) = Geo.nCells+1:size(X,1);
+	idxs(~Geo.XgID) = 1:Geo.nCells;
+% 	Geo.XgID = (1:size(X(Geo.XgID,:),1))+size(X(~Geo.XgID,:),1);
+
+ 	Twg = idxs(Twg);
 
 	%% Populate the Geo struct
 	CellFields = ["X", "T", "Y", "Area", "Area0", "Peri", "Peri0", "globalIds", "cglobalIds"];
@@ -35,7 +46,8 @@ function [Geo, Set] = InitGeo(Geo, Set)
 		Geo.Cells(c).T = Twg(any(ismember(Twg,c),2),:);
 	end
 
-    for c = 1:Geo.nCells
-        Geo.Cells(c).Y  = BuildYFromX(Geo.Cells(c), Geo.Cells);
-    end
+	for c = 1:Geo.nCells
+		Geo.Cells(c).Y         = BuildYFromX(Geo.Cells(c), Geo.Cells);
+	end
+	Geo = BuildGlobalIds(Geo);
 end
