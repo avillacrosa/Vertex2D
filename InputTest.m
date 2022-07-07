@@ -7,7 +7,7 @@ function [Geo, Mat, Set] = InputTest()
 
 	Set.tend=300;
 	Set.Nincr=300;
-
+	Set.nu = 0.00500;
 	Set.OutputFolder='Result/Test';
     Mat = struct();
 end

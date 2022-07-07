@@ -36,7 +36,7 @@ function [Geo, Set] = InitGeo(Geo, Set)
  	Twg = idxs(Twg);
 
 	%% Populate the Geo struct
-	CellFields = ["X", "T", "Y", "Area", "Area0", "Peri", "Peri0", "globalIds", "cglobalIds"];
+	CellFields = ["X", "T", "Y", "Area", "Peri", "globalIds", "cglobalIds"];
 
 	% Build the Cells struct Array
 	Geo.Cells = BuildStructArray(length(X), CellFields);
@@ -47,7 +47,8 @@ function [Geo, Set] = InitGeo(Geo, Set)
 	end
 
 	for c = 1:Geo.nCells
-		Geo.Cells(c).Y         = BuildYFromX(Geo.Cells(c), Geo.Cells);
+		Geo.Cells(c).Y     = BuildYFromX(Geo.Cells(c), Geo.Cells);
 	end
 	Geo = BuildGlobalIds(Geo);
+	Geo = UpdateMeasures(Geo);
 end

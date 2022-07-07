@@ -1,8 +1,11 @@
 function RunV3(Geo, Mat, Set)
 
-    Set = SetDefault(Set);
-    Geo = InitGeo(Geo, Set);
+	Dofs = struct(); %Bad...
 
+    Set  = SetDefault(Set);
+    Geo  = InitGeo(Geo, Set);
+	Dofs = GetDOFs(Geo, Dofs, Set);
+	
     PostProcessingVTK(Geo, Set, 0);
 
 	t=0;
@@ -10,6 +13,6 @@ function RunV3(Geo, Mat, Set)
 	numStep = 1;
 	while t<=Set.tend
 		[g, K, E] = KgGlobal(Geo_0, Geo_n, Geo, Set); 
-		[Geo, g, K, Energy, Set, gr, dyr, dy] = NewtonRaphson(Geo_0, Geo_n, Geo, Dofs, Set, K, g, numStep, t);
+		[Geo, g, K, E, Set, gr, dyr, dy] = NewtonRaphson(Geo_0, Geo_n, Geo, Dofs, Set, K, g, numStep, t);
 	end
 end

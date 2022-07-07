@@ -1,28 +1,31 @@
-function [gs,Ks,Kss]=KgArea_e(y1,y2,y3)
-	% Returns residual and  Jacobian of A=||(y1-y2)x(y2-y3)||
-	% notation
-	% YI=Cross_mex(yI)
-	% q =(y1-y3)x(y2-y3) = Y1y2 - Y1y3 - Y3y2
+function [gs,Ks]=KgArea_e(y1,y2,y3)
+	Q = [ 0 1 ;-1 0];
+	y1 = y1'; y2 = y2'; y3 = y3';
+	a = y1-y3;
+	b = y2-y3;
+	q = a'*Q*b;
+	dq1 = Q*(y2-y3); dq1 = dq1';
+	dq2 = (y1-y3)'*Q; 
+	dq3 = -(Q*(y2-y3))'-(y1-y3)'*Q;
 
-	y1_Crossed = Cross_mex(y1);
-	y2_Crossed = Cross_mex(y2);
-	y3_Crossed = Cross_mex(y3);
+	% OK UNTIL HERE
+	At = norm(q)/2;
+	dAdy = [q'*dq1'; q'*dq2'; q'*dq3']/(4*At);
+
+	gs = dAdy;
 	
-	q= y2_Crossed*y1' - y2_Crossed*y3' + y1_Crossed*y3';
-	% Q_I = der_yI q =  Cross_mex(yK) -Cross_mex(yJ)
-	Q1=y2_Crossed-y3_Crossed;
-	Q2=y3_Crossed-y1_Crossed;
-	Q3=y1_Crossed-y2_Crossed;
-	% KK_IJ = der_yJ QI
-	fact=1/(2*norm(q));
-	gs=fact.*[Q1'*q; % der_Y1 (det(Y1,Y2,Y3))
-    	Q2'*q;
-    	Q3'*q];
+	K_s1	= -(dAdy*dAdy')/At;
+
+
+	K_s2	=  [dq1'*dq1    dq1'*dq2    dq1'*dq3
+				dq2'*dq1    dq2'*dq2    dq2'*dq3
+				dq3'*dq3    dq3'*dq2    dq3'*dq3];
+
+	Q0 = zeros(size(Q));
+	K_s3	=  [  Q0     q'*Q   -q'*Q
+				q'*Q      Q0    -q'*Q
+		       -q'*Q    -q'*Q     Q0];
 	
-	Kss=-(2/norm(q)).*(gs)*(gs');
-	
-	Ks=fact.*[Q1'*Q1               KK(y1_Crossed,y2_Crossed,y3_Crossed,y1,y2,y3) KK(y1_Crossed,y3_Crossed,y2_Crossed,y1,y3,y2);
-    	KK(y2_Crossed,y1_Crossed,y3_Crossed,y2,y1,y3)  Q2'*Q2              KK(y2_Crossed,y3_Crossed,y1_Crossed,y2,y3,y1);
-    	KK(y3_Crossed,y1_Crossed,y2_Crossed,y3,y1,y2)  KK(y3_Crossed,y2_Crossed,y1_Crossed,y3,y2,y1) Q3'*Q3            ];
+	Ks		= K_s1 + (K_s2 + K_s3)/(4*At);
 end
 
