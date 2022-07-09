@@ -6,13 +6,12 @@ function Geo = BuildGlobalIds(Geo)
 		for cj = 1:ci-1 
 			ij = [ci, cj];
 			CellJ = Geo.Cells(cj);
+            % TODO FIXME THIS IS SURELY WRONG
 			face_ids_i	= sum(ismember(Cell.T,ij),2)==2;
 			face_ids_j	= sum(ismember(CellJ.T,ij),2)==2;
 			gIds(face_ids_i) = CellJ.globalIds(face_ids_j);
 		end
-		% Take the number of zeroes in vertices (nz)
 		nz = length(gIds(gIds==0));
-		% Build a range from the last id assigned to the last new one in
 		gIds(gIds==0) = gIdsTot:(gIdsTot+nz-1);
 		Geo.Cells(ci).globalIds = gIds;
 		gIdsTot = gIdsTot + nz;

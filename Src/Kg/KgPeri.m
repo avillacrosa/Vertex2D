@@ -3,24 +3,30 @@ function [g, K, E] = KgPeri(Geo_0, Geo, Set)
 	E		= 0;
 	for c = 1:Geo.nCells
 		Cell = Geo.Cells(c);
-		X  = Geo.Cells(c).X;
+        Cell_0 = Geo_0.Cells(c);
 		Ys = Geo.Cells(c).Y;
-		ge	  = zeros(size(g, 1), 1);
-		for yi = 1:size(Ys,1)
-			if t+1 > size(Ys,1)
-				y1 = Ys(1,:);
-				y2 = Ys(size(Ys,1),:);
-				nY = [Cell.globalIds(size(Ys,1)), Cell.globalIds(1)];
-			else
-				y1 = Ys(t,:);
-				y2 = Ys(t+1,:);
-				nY = [Cell.globalIds(t), Cell.globalIds(t+1)];
-			end
-			[gs, Ks] = KgArea_e(y1, y2, y3);
-			ge	= Assembleg(ge,gs,nY);
-			K	= AssembleK(K,Ks,nY);
-		end
-		g=g+ge;
-		K=K+(ge)*(ge'); % TODO FIXME What is this?
+		ge = zeros(size(g, 1), 1);
+        Ke = zeros(size(g, 1));
+        for yi = 1:size(Ys,1)
+	        if yi+1 > size(Ys,1)
+		        y1 = Ys(1,:);
+		        y2 = Ys(size(Ys,1),:);
+		        nY = [Cell.globalIds(size(Ys,1)), Cell.globalIds(1)];
+	        else
+		        y1 = Ys(yi,:);
+		        y2 = Ys(yi+1,:);
+		        nY = [Cell.globalIds(yi), Cell.globalIds(yi+1)];
+	        end
+	        [gl, Kl] = KgPeri_e(y1, y2);
+%             Kl  = fact*Kl; % MULTIPLYING HERE IS THE SAME AS MULTIPLYING
+%             OUTSIDE THE LENGHT LOOP
+	        ge	= Assembleg(ge,gl,nY);
+	        Ke	= AssembleK(Ke,Kl,nY);
+        end
+        % THINK IT'S PRETTY CLEAR NOW THERE IS SOMETHING WRONG INSIDE
+        % KgPeri_e
+		fact=Cell.Peri/Cell_0.Peri^2; % 1 at first iteration so it does not play a role
+		g = g + fact*ge;
+		K = fact*Ke + (ge)*(ge')/(Cell_0.Peri^2); 
 	end
 end
