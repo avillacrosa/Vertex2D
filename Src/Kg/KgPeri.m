@@ -11,7 +11,9 @@ function [g, K, E] = KgPeri(Geo_0, Geo, Set)
 	        if yi+1 > size(Ys,1)
 		        y1 = Ys(1,:);
 		        y2 = Ys(size(Ys,1),:);
-		        nY = [Cell.globalIds(size(Ys,1)), Cell.globalIds(1)];
+				% TODO FIXME THE BUG WAS HERE IN THE GLOBAL INDEXES,
+				% FOCUS MAN!
+		        nY = [Cell.globalIds(1), Cell.globalIds(size(Ys,1))];
 	        else
 		        y1 = Ys(yi,:);
 		        y2 = Ys(yi+1,:);
