@@ -47,7 +47,7 @@ function [Geo, Set] = InitGeo(Geo, Set)
 	end
 
 	for c = 1:Geo.nCells
-		Geo.Cells(c).Y     = BuildYFromX(Geo.Cells(c), Geo.Cells);
+		[Geo.Cells(c).Y,Geo.Cells(c).T] = BuildYFromX(Geo.Cells(c), Geo.Cells);
 	end
 	Geo = BuildGlobalIds(Geo);
 	Geo = UpdateMeasures(Geo);

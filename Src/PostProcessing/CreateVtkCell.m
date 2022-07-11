@@ -1,4 +1,4 @@
-function CreateVtkCell(Geo, Set, Step)
+function CreateVtkCell(Geo_0, Geo, Set, Step)
 	%% ============================= INITIATE =============================
 	str0=Set.OutputFolder;                          % First Name of the file 
 	fileExtension='.vtk';                            % extension
@@ -19,7 +19,7 @@ function CreateVtkCell(Geo, Set, Step)
 		header = header + "ASCII\n";
 		header = header + "DATASET UNSTRUCTURED_GRID\n";
 
-		points = ""; cells = ""; cells_type = "";
+		points = ""; cells = ""; cells_type = ""; data = "";
 		for yi = 1:nY
     		points = points + sprintf(" %.8f %.8f %.8f\n",...
 				           		Ys(yi,1),Ys(yi,2), 0);
@@ -35,13 +35,15 @@ function CreateVtkCell(Geo, Set, Step)
 
 		for numTries=1:nY
         	cells_type = cells_type + sprintf('%d\n',5);
+			dA = (Geo.Cells(c).Area-Geo_0.Cells(c).Area)/(Geo_0.Cells(c).Area);
+			data     = data + sprintf("%f \n", dA);
 		end
 
 		points = sprintf("POINTS %d float\n", nY+1) + points;
 		cells  = sprintf("CELLS %d %d\n",nY,4*nY) + cells;
 		cells_type = sprintf("CELL_TYPES %d \n", nY) + cells_type;
-
-		fprintf(fout, header + points + cells + cells_type);
+		data = sprintf('CELL_DATA %d\nSCALARS AreaChange float 1\nLOOKUP_TABLE default\n', nY) + data;
+		fprintf(fout, header + points + cells + cells_type + data);
 		fclose(fout);
 	end
 end

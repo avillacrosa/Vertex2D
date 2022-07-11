@@ -8,8 +8,16 @@ function Geo = BuildGlobalIds(Geo)
 			CellJ = Geo.Cells(cj);
             % TODO FIXME THIS IS SURELY WRONG
 			face_ids_i	= sum(ismember(Cell.T,ij),2)==2;
-			face_ids_j	= sum(ismember(CellJ.T,ij),2)==2;
-			gIds(face_ids_i) = CellJ.globalIds(face_ids_j);
+% 			face_ids_j	= sum(ismember(CellJ.T,T),2)==3;
+% 			gIds(face_ids_i) = CellJ.globalIds(face_ids_j);
+			face_ids = find(face_ids_i);
+			% TODO FIXME, forced, do better
+			for id = 1:length(face_ids)
+				face_id = face_ids(id);
+				T = Cell.T(face_id,:);
+				face_id_j	= sum(ismember(CellJ.T,T),2)==3;
+				gIds(face_id) = CellJ.globalIds(face_id_j);
+			end
 		end
 		nz = length(gIds(gIds==0));
 		gIds(gIds==0) = gIdsTot:(gIdsTot+nz-1);

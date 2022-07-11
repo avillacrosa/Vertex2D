@@ -1,4 +1,4 @@
-function CreateVtkCellAll(Geo, Set, Step)
+function CreateVtkCellAll(Geo_0, Geo, Set, Step)
 	%% ============================= INITIATE =============================
 	str0=Set.OutputFolder;                          % First Name of the file 
 	fileExtension='.vtk';                            % extension
@@ -15,7 +15,7 @@ function CreateVtkCellAll(Geo, Set, Step)
 	header = header + "Delaunay_vtk\n";
 	header = header + "ASCII\n";
 	header = header + "DATASET UNSTRUCTURED_GRID\n";
-	points = ""; cells = ""; cells_type = "";
+	points = ""; cells = ""; cells_type = ""; data = "";
 
 	nYTot = 0;
 	for c = 1:Geo.nCells
@@ -28,14 +28,18 @@ function CreateVtkCellAll(Geo, Set, Step)
 		end
 		points = points + sprintf(" %.6f %.6f %.6f\n",...
 				           		X(1), X(2), 0);
-
+		% TODO FIXME, bad...
 		for ci = 1:max((nY-1),0)
 			cells    = cells + sprintf("3 %d %d %d\n",...
 					        	ci-1+nYTot, ci+nYTot, nY+nYTot);
+			dA = (Geo.Cells(c).Area-Geo_0.Cells(c).Area)/(Geo_0.Cells(c).Area);
+			data     = data + sprintf("%f \n", dA);
 		end
+		dA = (Geo.Cells(c).Area-Geo_0.Cells(c).Area)/(Geo_0.Cells(c).Area);
+		data     = data + sprintf("%f \n", dA);
 		cells    = cells + sprintf("3 %d %d %d\n",...
 							        	nY-1+nYTot, nYTot, nY+nYTot);
-
+		
 		nYTot = nYTot + nY + 1;
 	end
 	for numTries=1:nYTot-Geo.nCells
@@ -44,8 +48,9 @@ function CreateVtkCellAll(Geo, Set, Step)
 	points = sprintf("POINTS %d float\n", nYTot) + points;
 	cells  = sprintf("CELLS %d %d\n",nYTot-Geo.nCells,4*(nYTot-Geo.nCells)) + cells;
 	cells_type = sprintf("CELL_TYPES %d \n", nYTot-Geo.nCells) + cells_type;
+	data = sprintf('CELL_DATA %d\nSCALARS AreaChange float 1\nLOOKUP_TABLE default\n', nYTot-Geo.nCells) + data;
 
-	fprintf(fout, header + points + cells + cells_type);
+	fprintf(fout, header + points + cells + cells_type + data);
 
 	fclose(fout);
 end

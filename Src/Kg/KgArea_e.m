@@ -14,18 +14,22 @@ function [gs,Ks]=KgArea_e(y1,y2,y3)
 
 	gs = dAdy;
 	
-	K_s1	= -(dAdy*dAdy')/At;
+	K_s1	= -(dAdy*dAdy')/At; % This is ok since gs is ok
 
 
 	K_s2	=  [dq1'*dq1    dq1'*dq2    dq1'*dq3
 				dq2'*dq1    dq2'*dq2    dq2'*dq3
-				dq3'*dq3    dq3'*dq2    dq3'*dq3];
+				dq3'*dq1    dq3'*dq2    dq3'*dq3]; % THis is ok since gs is ok
 
 	Q0 = zeros(size(Q));
-	K_s3	=  [  Q0     q'*Q   -q'*Q
-				q'*Q      Q0    -q'*Q
-		       -q'*Q    -q'*Q     Q0];
+% 	K_s3	=  [  Q0     q'*Q   -q'*Q
+% 				q'*Q      Q0    -q'*Q
+% 		       -q'*Q    -q'*Q     Q0];
+	K_s3	=  -[  Q0     Q'*q    Q'*q
+				-Q'*q     Q0     Q'*q
+		        -Q'*q   -Q'*q     Q0];
 	
 	Ks		= K_s1 + (K_s2 + K_s3)/(4*At);
+% 	Ks		= K_s1 + (K_s2)/(4*At);
 end
 

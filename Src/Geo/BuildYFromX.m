@@ -1,4 +1,4 @@
-function Y = BuildYFromX(Cell, Cells)
+function [Y, T] = BuildYFromX(Cell, Cells)
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	% BuildYFromX:										  
 	%   Computes the positions of vertices for a cell using its nodal 
@@ -32,5 +32,6 @@ function Y = BuildYFromX(Cell, Cells)
 		prev_tri = Cell.T(next_tri_i(1),:);
 	end
 	Y = Y(tri_order,:);
+	T = Tris(tri_order,:);
 end
 

@@ -1,5 +1,5 @@
-function PostProcessingVTK(Geo, Set, Step)
-	CreateVtkCell(Geo, Set, Step);
-	CreateVtkCellAll(Geo, Set, Step);
-	CreateVtkConn(Geo, Set, Step)
+function PostProcessingVTK(Geo_0, Geo, Set, Step)
+	CreateVtkCell(Geo_0, Geo, Set, Step);
+	CreateVtkCellAll(Geo_0, Geo, Set, Step);
+% 	CreateVtkConn(Geo, Set, Step)
 end 

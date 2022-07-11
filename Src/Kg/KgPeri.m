@@ -28,7 +28,7 @@ function [g, K, E] = KgPeri(Geo_0, Geo, Set)
         % THINK IT'S PRETTY CLEAR NOW THERE IS SOMETHING WRONG INSIDE
         % KgPeri_e
 		fact=Cell.Peri/Cell_0.Peri^2; % 1 at first iteration so it does not play a role
-		g = g + fact*ge;
-		K = fact*Ke + (ge)*(ge')/(Cell_0.Peri^2); 
+		g = g + fact*ge*Set.lambdaP;
+		K = K + fact*Ke*Set.lambdaP + (ge)*(ge')/(Cell_0.Peri^2)*Set.lambdaP; 
 	end
 end

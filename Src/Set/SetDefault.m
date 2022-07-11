@@ -9,52 +9,16 @@ function Set = SetDefault(Set)
 	% Output:															  %
 	%   Set : User input set struct with added default fields             %
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	
     DSet = struct();
-    %% =============================  Topology ============================
-    DSet.SeedingMethod				= 1;
-    DSet.s							= 1.5;
-    DSet.ObtainX					= 0;
-	DSet.Substrate                  = false;
-	DSet.SubstrateZ                 = 0;
-    %% 2D input image to obtain  the initial topology of the cells
-    DSet.InputSegmentedImage		= [];
-    DSet.CellAspectRatio			= 1;
-    DSet.zScale						= 1;
-    DSet.TotalCells					= 9;
-    %% ===========================  Add Substrate =========================
-    DSet.Substrate					= false;
-    DSet.kSubstrate					= 0;
     %% ============================ Time ==================================
     DSet.tend						= 200;
     DSet.Nincr						= 200;
     %% ============================ Mechanics =============================
-    DSet.lambdaV					= 1;
-    DSet.lambdaV_Debris				= 0.001;
-    DSet.SurfaceType				= 1;
-    DSet.A0eq0						= true;
-    DSet.lambdaS1					= 0.5;
-    DSet.lambdaS2					= 0.1;
-    DSet.lambdaS1CellFactor			= [];
-    DSet.lambdaS2CellFactor			= [];
-    DSet.lambdaS3CellFactor			= [];
-    DSet.lambdaS4CellFactor			= [];
-    DSet.EnergyBarrier				= true;
-    DSet.lambdaB					= 5;
-    DSet.Beta						= 1;
-    DSet.Bending					= false;
-    DSet.lambdaBend					= 0.01;
-    DSet.BendingAreaDependent		= true;
-    DSet.Propulsion					= false;
-	DSet.InPlaneElasticity          = false;
-    DSet.Confinement				= false;
-	DSet.mu_bulk					= 3000; 
-	DSet.lambda_bulk				= 2000;
+    DSet.lambdaA					= 0.5;
+	DSet.lambdaP					= 0.5;
+	DSet.lambdaL					= 0.5;
 	%% ============================ Viscosity =============================
     DSet.nu							= 0.05;
-    DSet.LocalViscosityEdgeBased	= false;
-    DSet.nu_Local_EdgeBased			= 0;
-    DSet.LocalViscosityOption		= 2;
     %% =========================== Remodelling ============================
     DSet.Remodelling				= true;
     DSet.RemodelTol					= .5e-6;
@@ -62,34 +26,16 @@ function Set = SetDefault(Set)
     %% ============================ Solution ==============================
     DSet.tol						= 1e-10;
     DSet.MaxIter					= 200;
-    DSet.Parallel					= false;
-    DSet.Sparse						= false;
     %% ================= Boundary Condition and loading setting ===========
     DSet.BC							= nan;
-    DSet.VFixd						= -inf;
-    DSet.VPrescribed				= inf;
-    DSet.dx							= 2;
     DSet.TStartBC					= 20;
     DSet.TStopBC					= 200;
 	%% =========================== PostProcessing =========================
     DSet.diary						= false;
-    DSet.OutputRemove				= true;
-    DSet.VTK						= true;
-    DSet.gVTK						= false;
-    DSet.VTK_iter					= false;
-% 	DSet.analysisDir				= strcat(Set.OutputFolder,Esc,'Analysis',Esc);
-	DSet.SaveWorkspace				= false;
-	DSet.SaveSetting				= false;
 	%% ====================== Add missing fields to Set ===================
 	Set  = AddDefault(Set, DSet);
 	DSet = Set;
 	%% ========================= Derived variables ========================
-    DSet.lambdaS3					= DSet.lambdaS2;
-    DSet.lambdaS4					= DSet.lambdaS2;
-    DSet.f							= DSet.s/2;
-    DSet.CellHeight					= DSet.CellAspectRatio*DSet.zScale; %!
-    DSet.nu_LP_Initial				= 50*DSet.nu; %!
-    DSet.BarrierTri0				= 1e-3*DSet.s; %!
 	DSet.nu0                        = DSet.nu;
 	DSet.dt0                        = DSet.tend/DSet.Nincr;
 	DSet.dt                         = DSet.dt0;
