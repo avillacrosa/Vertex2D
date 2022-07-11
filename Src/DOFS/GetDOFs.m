@@ -1,18 +1,18 @@
 function Dofs = GetDOFs(Geo, Dofs, Set)
-	if ~exist('Dofs','var')
-		Dofs = struct();
-	end
+	Dofs.Presc  = false((Geo.numY)*2,1);
+	Dofs.Free   = true((Geo.numY)*2, 1);
+	Dofs.Fix = false((Geo.numY)*2,1);
+	
 	if strcmpi(Set.BC, 'compress')
-		Dofs.PrescY = logical(Geo.numY+Geo.nCells);
-		Dofs.Free   = logical(Geo.numY+Geo.nCells);
 		for c = 1:Geo.nCells
 			Cell = Geo.Cells(c);
 			prescIdxs = Cell.Y(:,1) < Set.BCPrescribed;
-			prescIds = Cell.globalIds(prescIdxs);
-			Dofs.PrescY(prescIds) = true;
+			% globalIds refers to reshaped arrays! and dofs are linear
+			% indexes
+			prescIds  = 2*Cell.globalIds(prescIdxs)-1; % this is only x component
+			Dofs.Presc(prescIds) = true;
 			Dofs.Free(prescIds)   = false;
 		end
 	end
-	% TODO FIXME PLACEHOLDER
-	Dofs.Free = 1:(Geo.numY)*2; 
+	Dofs.Free = find(Dofs.Free); 
 end
