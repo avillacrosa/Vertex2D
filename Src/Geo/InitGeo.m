@@ -19,7 +19,6 @@ function [Geo, Set] = InitGeo(Geo, Set)
 	%% Centre Nodal position at (0,0)
 	X(:,1)=X(:,1)-mean(X(:,1));
 	X(:,2)=X(:,2)-mean(X(:,2));
-
 	%% Perform Delaunay
 	Twg = delaunay(X);
 	% Define as ghost nodes those at the boundary
@@ -28,6 +27,10 @@ function [Geo, Set] = InitGeo(Geo, Set)
 	Geo.nCells = size(X(~Geo.XgID,:),1);
 	
 	X = [X(~Geo.XgID,:); X(Geo.XgID,:)];
+	
+	theta = pi/4;
+% 	R = [cos(theta) -sin(theta); sin(theta) cos(theta)];
+% 	X = X*R;
 	idxs = 1:size(X, 1);
 	idxs(Geo.XgID) = Geo.nCells+1:size(X,1);
 	idxs(~Geo.XgID) = 1:Geo.nCells;

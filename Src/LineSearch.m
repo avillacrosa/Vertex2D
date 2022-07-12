@@ -1,5 +1,4 @@
 function [alpha]=LineSearch(Geo_0, Geo_n, Geo, Dofs, Set, gc, dy)
-	
 	%% Update mechanical nodes
 	dy_reshaped = reshape(dy, 2, (Geo.numY+Geo.nCells))';
 	

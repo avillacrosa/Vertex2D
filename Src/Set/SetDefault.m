@@ -28,8 +28,8 @@ function Set = SetDefault(Set)
     DSet.MaxIter					= 200;
     %% ================= Boundary Condition and loading setting ===========
     DSet.BC							= nan;
-    DSet.TStartBC					= 20;
-    DSet.TStopBC					= 200;
+    DSet.BCStart					= inf;
+    DSet.BCStop 					= -inf;
 	%% =========================== PostProcessing =========================
     DSet.diary						= false;
 	%% ====================== Add missing fields to Set ===================

@@ -1,8 +1,6 @@
 close all; clear; clc;
 addpath(genpath('Src'));
 
-% [Geo, Mat, Set] = InputTest;
-[Geo, Mat, Set] = InputCompress;
+[Geo, Mat, Set] = Compress;
 
-
-RunV3(Geo, Mat, Set);
+RunVX(Geo, Mat, Set);

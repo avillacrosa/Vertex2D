@@ -3,6 +3,11 @@ function [g, K, E] = KgLine(Geo_0, Geo, Set)
 	E		= 0;
 	gIdsStore = zeros(0,2);
 	for c = 1:Geo.nCells
+% 		if Geo.Remodelling
+% 			if ~ismember(c,Geo.AssembleNodes)
+%         		continue
+% 			end
+% 		end
 		Cell = Geo.Cells(c);
         Cell_0 = Geo_0.Cells(c);
 		Ys = Geo.Cells(c).Y;
@@ -20,6 +25,11 @@ function [g, K, E] = KgLine(Geo_0, Geo, Set)
     			y2 = Ys(yi+1,:);
     			nY = [Cell.globalIds(yi), Cell.globalIds(yi+1)];
 				l0 = norm(Ys0(yi,:)-Ys0(yi+1,:));
+			end
+			if Geo.Remodelling
+				if ~any(ismember(nY,Geo.AssemblegIds))
+        		    continue
+				end
 			end
 			if sum(ismember(gIdsStore, nY),2)==2
 				continue
