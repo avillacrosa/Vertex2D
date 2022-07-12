@@ -19,7 +19,7 @@ function CreateVtkCell(Geo_0, Geo, Set, Step)
 		header = header + "ASCII\n";
 		header = header + "DATASET UNSTRUCTURED_GRID\n";
 
-		points = ""; cells = ""; cells_type = ""; data = "";
+		points = ""; cells = ""; cells_type = ""; data = ""; data_id = "";
 		for yi = 1:nY
     		points = points + sprintf(" %.8f %.8f %.8f\n",...
 				           		Ys(yi,1),Ys(yi,2), 0);
@@ -37,13 +37,15 @@ function CreateVtkCell(Geo_0, Geo, Set, Step)
         	cells_type = cells_type + sprintf('%d\n',5);
 			dA = (Geo.Cells(c).Area-Geo_0.Cells(c).Area)/(Geo_0.Cells(c).Area);
 			data     = data + sprintf("%f \n", dA);
+			data_id  = data_id + sprintf("%d \n", c);
 		end
 
 		points = sprintf("POINTS %d float\n", nY+1) + points;
 		cells  = sprintf("CELLS %d %d\n",nY,4*nY) + cells;
 		cells_type = sprintf("CELL_TYPES %d \n", nY) + cells_type;
-		data = sprintf('CELL_DATA %d\nSCALARS AreaChange float 1\nLOOKUP_TABLE default\n', nY) + data;
-		fprintf(fout, header + points + cells + cells_type + data);
+		data = sprintf('SCALARS AreaChange float 1\nLOOKUP_TABLE default\n') + data;
+		data_id = sprintf('CELL_DATA %d\n SCALARS Id float 1\nLOOKUP_TABLE default\n', nY) + data_id;
+		fprintf(fout, header + points + cells + cells_type + data_id + data);
 		fclose(fout);
 	end
 end

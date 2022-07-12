@@ -2,6 +2,11 @@ function [g, K, E] = KgPeri(Geo_0, Geo, Set)
 	[g, K]	= initializeKg(Geo, Set);
 	E		= 0;
 	for c = 1:Geo.nCells
+% 		if Geo.Remodelling
+% 			if ~ismember(c,Geo.AssembleNodes)
+%         		continue
+% 			end
+% 		end
 		Cell = Geo.Cells(c);
         Cell_0 = Geo_0.Cells(c);
 		Ys = Geo.Cells(c).Y;
@@ -18,7 +23,12 @@ function [g, K, E] = KgPeri(Geo_0, Geo, Set)
 		        y1 = Ys(yi,:);
 		        y2 = Ys(yi+1,:);
 		        nY = [Cell.globalIds(yi), Cell.globalIds(yi+1)];
-	        end
+			end
+			if Geo.Remodelling
+				if ~any(ismember(nY,Geo.AssemblegIds))
+        		    continue
+				end
+			end
 	        [gl, Kl] = KgPeri_e(y1, y2);
 %             Kl  = fact*Kl; % MULTIPLYING HERE IS THE SAME AS MULTIPLYING
 %             OUTSIDE THE LENGHT LOOP
