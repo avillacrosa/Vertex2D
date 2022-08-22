@@ -39,18 +39,6 @@ function [Geo_0, Geo_n, Geo] = Remodel(Geo_0, Geo_n, Geo, Dofs, Set)
 
 				%% Reset Geo_0 because of remodelling?
 				Geo_0 = Geo;
-
-				%% Solve local problem
-				[DofsRemodel, Geo] = GetRemodelDOFs(newTets, Dofs, Geo);
-				Geo.Remodelling = true;
-				Set.nu = 50*Set.nu0*2;
-				while Set.nu ~= Set.nu0
-					% TODO FIXME, is there a cleaner way for this?
-					Set.nu = max(Set.nu/2, Set.nu0);
-					[g, K, ~] = KgGlobal(Geo_0, Geo_n, Geo, Set, DofsRemodel);
-					Geo = NewtonRaphson(Geo_0, Geo_n, Geo, DofsRemodel, Set, K, g, -1, -1);
-				end
-				Geo.Remodelling = false;
 			end
 		end
 	end
