@@ -1,7 +1,6 @@
 function [g, K, E] = KgLine(Geo_0, Geo, Set)
 	[g, K]	= initializeKg(Geo, Set);
 	E		= 0;
-	gIdsStore = zeros(0,2);
 	for c = 1:Geo.nCells
 % 		if Geo.Remodelling
 % 			if ~ismember(c,Geo.AssembleNodes)
@@ -30,11 +29,7 @@ function [g, K, E] = KgLine(Geo_0, Geo, Set)
 				if ~any(ismember(nY,Geo.AssemblegIds))
         		    continue
 				end
-			end
-			if sum(ismember(gIdsStore, nY),2)==2
-				continue
-			end
-			gIdsStore(end+1,:) = nY; % TODO FIXME Workaround for this?
+            end
 			[gl, Kl] = KgLine_e(y1, y2);
 			gl = gl/l0^2;
 			Kl = Kl/l0^2;
