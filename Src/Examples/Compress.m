@@ -1,14 +1,14 @@
 function [Geo, Mat, Set] = Compress()
-    Geo.nx = 6;
-    Geo.ny = 6;
+    Geo.nx = 10;
+    Geo.ny = 10;
 
 	Set.BC				= 'compress';
 	Set.BCdxdt			= 0.01;
 
 	Set.RemodelTol = 0.2;
-	Set.lambdaA	= 8;
+	Set.lambdaA	= 4;
 	Set.lambdaP	= 0.5;
-	Set.lambdaL	= 0.5;
+	Set.lambdaL	= 0.1;
 
 	% TODO FIXME, hard-code case, should be implemented as in V-TFM to get
 	% the planes being moved and what not...

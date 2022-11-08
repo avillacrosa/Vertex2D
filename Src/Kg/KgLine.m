@@ -2,14 +2,9 @@ function [g, K, E] = KgLine(Geo_0, Geo, Set)
 	[g, K]	= initializeKg(Geo, Set);
 	E		= 0;
 	for c = 1:Geo.nCells
-% 		if Geo.Remodelling
-% 			if ~ismember(c,Geo.AssembleNodes)
-%         		continue
-% 			end
-% 		end
-		Cell = Geo.Cells(c);
+		Cell   = Geo.Cells(c);
         Cell_0 = Geo_0.Cells(c);
-		Ys = Geo.Cells(c).Y;
+		Ys  = Cell.Y;
 		Ys0 = Cell_0.Y;
 		ge = zeros(size(g, 1), 1);
         Ke = zeros(size(g, 1));
@@ -25,18 +20,13 @@ function [g, K, E] = KgLine(Geo_0, Geo, Set)
     			nY = [Cell.globalIds(yi), Cell.globalIds(yi+1)];
 				l0 = norm(Ys0(yi,:)-Ys0(yi+1,:));
 			end
-			if Geo.Remodelling
-				if ~any(ismember(nY,Geo.AssemblegIds))
-        		    continue
-				end
-            end
 			[gl, Kl] = KgLine_e(y1, y2);
 			gl = gl/l0^2;
 			Kl = Kl/l0^2;
 			ge	= Assembleg(ge,gl,nY);
 			Ke	= AssembleK(Ke,Kl,nY);
 		end
+		g = g + ge*Set.lambdaL;
+		K = K + Ke*Set.lambdaL;
 	end
-	g = g + ge*Set.lambdaL;
-	K = K + Ke*Set.lambdaL; 
 end

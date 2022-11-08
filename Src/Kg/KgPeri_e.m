@@ -4,10 +4,7 @@ function [gl,Kl]=KgPeri_e(y1,y2)
     dldy1 = -[1 0; 0 1];
     dldy2 = [1 0; 0 1];
 
-    dLdy1 = dldy1'*l/L;
-    dLdy2 = dldy2'*l/L;
-
-    gl = [dLdy1; dLdy2]; % gl is already wrong
+    gl = [dldy1'*l; dldy2'*l]/L;
 
     Kl = [ dldy1*dldy1' dldy1*dldy2'
            dldy2*dldy1' dldy2*dldy2'];
