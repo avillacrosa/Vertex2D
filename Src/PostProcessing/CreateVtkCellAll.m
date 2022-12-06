@@ -18,6 +18,9 @@ function CreateVtkCellAll(Geo_0, Geo, Set, Step)
 	points = ""; cells = ""; cells_type = ""; data = ""; data_id = "";
 
 	nYTot = 0;
+	ids = 1:Geo.nCells;
+	rng(1);
+	ids=ids(randperm(length(ids)));
 	for c = 1:Geo.nCells
 		Ys = Geo.Cells(c).Y;
 		X = Geo.Cells(c).X;
@@ -34,12 +37,12 @@ function CreateVtkCellAll(Geo_0, Geo, Set, Step)
 					        	ci-1+nYTot, ci+nYTot, nY+nYTot);
 			dA = (Geo.Cells(c).Area-Geo_0.Cells(c).Area)/(Geo_0.Cells(c).Area);
 			data     = data + sprintf("%f \n", dA);
-			data_id  = data_id + sprintf("%d \n", c);
+			data_id  = data_id + sprintf("%d \n", ids(c));
 
 		end
 		dA = (Geo.Cells(c).Area-Geo_0.Cells(c).Area)/(Geo_0.Cells(c).Area);
 		data     = data + sprintf("%f \n", dA);
-		data_id  = data_id + sprintf("%d \n", c);
+		data_id  = data_id + sprintf("%d \n", ids(c));
 		cells    = cells + sprintf("3 %d %d %d\n",...
 							        	nY-1+nYTot, nYTot, nY+nYTot);
 		

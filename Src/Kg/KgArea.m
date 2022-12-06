@@ -7,6 +7,8 @@ function [g, K, E] = KgArea(Geo_0, Geo, Set)
 		X  = Geo.Cells(c).X;
 		Ys = Geo.Cells(c).Y;
 		Ke = zeros(size(g, 1)); ge = zeros(size(g, 1), 1);
+		%% TODO FIXME REMOVE THIS
+		Cell0.Area = Cell0.Area/2;
 		factg = Set.lambdaA*(Cell.Area-Cell0.Area)/(Cell0.Area)^2;
 		for t = 1:size(Ys,1)
 			if t+1 > size(Ys,1)
