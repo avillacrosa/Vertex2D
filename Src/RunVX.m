@@ -1,7 +1,7 @@
-function RunVX(Geo, Mat, Set)
+function Geo = RunVX(Geo, Mat, Set)
 	
 	Dofs = struct();
-    Set  = SetDefault(Set);
+    Set  = InitSet(Set);
     Geo  = InitGeo(Geo, Set);
 	InitiateOutputFolder(Set);
 	Geo.Remodelling = false;
@@ -14,11 +14,11 @@ function RunVX(Geo, Mat, Set)
 	while t<=Set.tend
 		[Geo_0, Geo_n, Geo] = Remodel(Geo_0, Geo_n, Geo, Dofs, Set);
 		Dofs = GetDOFs(t, Geo, Dofs, Set);
-		Geo = ApplyBC(t, Geo, Dofs, Set);
-		Geo = UpdateMeasures(Geo);
+		Geo  = ApplyBC(t, Geo, Dofs, Set);
+		Geo  = UpdateMeasures(Geo);
+		Geo  = Polarizations(Geo);
 		
 		[g, K, E] = KgGlobal(Geo_0, Geo_n, Geo, Set, Dofs); 
-
 		Geo = NewtonRaphson(Geo_0, Geo_n, Geo, Dofs, Set, K, g, numStep, t);
         Geo = BuildXFromY(Geo_n, Geo);
         PostProcessingVTK(Geo_0, Geo, Set, numStep);

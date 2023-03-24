@@ -1,4 +1,4 @@
-function Set = SetDefault(Set)
+function Set = InitSet(Set)
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	% SetDefault:														  %
 	%   Adds to the Set struct all the default fields not given in the	  %
@@ -17,12 +17,15 @@ function Set = SetDefault(Set)
     DSet.lambdaA					= 0.5;
 	DSet.lambdaP					= 0.5;
 	DSet.lambdaL					= 0.5;
+	DSet.v0                         = 1; 
 	%% ============================ Viscosity =============================
     DSet.nu							= 0.05;
     %% =========================== Remodelling ============================
     DSet.Remodelling				= true;
     DSet.RemodelTol					= .5e-6;
     DSet.RemodelingFrequency		= 2;
+	%% TODO FIXME: DEFINE UNITS FOR THIS?
+	DSet.DivideFreq                 = 1; 
     %% ============================ Solution ==============================
     DSet.tol						= 1e-10;
     DSet.MaxIter					= 200;

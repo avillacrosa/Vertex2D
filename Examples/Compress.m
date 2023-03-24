@@ -12,10 +12,12 @@ function [Geo, Mat, Set] = Compress()
 
 	% TODO FIXME, hard-code case, should be implemented as in V-TFM to get
 	% the planes being moved and what not...
+
 	Set.BCPrescribed    = -2.4; 
 	Set.BCFix			= 2.4;
 	Set.BCStart			= 20;
 	Set.BCStop			= 320;
+	
 	Set.tend			= 350;
 	Set.Nincr			= 350;
 

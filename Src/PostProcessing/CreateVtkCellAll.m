@@ -19,8 +19,6 @@ function CreateVtkCellAll(Geo_0, Geo, Set, Step)
 
 	nYTot = 0;
 	ids = 1:Geo.nCells;
-	rng(1);
-	ids=ids(randperm(length(ids)));
 	for c = 1:Geo.nCells
 		Ys = Geo.Cells(c).Y;
 		X = Geo.Cells(c).X;

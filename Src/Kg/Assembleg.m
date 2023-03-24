@@ -1,6 +1,4 @@
 function g = Assembleg(g,ge,nY)
-	% Assembly of the residual of an element (e.g. Triangle ->length(nY)*3=length(ge)=9,
-	%                                                edge->    length(nY)*2=length(ge)=6))
 	dim=2;
 	idofg = zeros(length(nY)*dim, 1);
 	

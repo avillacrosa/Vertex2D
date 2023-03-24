@@ -28,7 +28,7 @@ function [Geo, Set] = InitGeo(Geo, Set)
 	
 	X = [X(~Geo.XgID,:); X(Geo.XgID,:)];
 	
-	theta = pi/4;
+% 	theta = pi/4;
 % 	R = [cos(theta) -sin(theta); sin(theta) cos(theta)];
 % 	X = X*R;
 	idxs = 1:size(X, 1);
@@ -39,7 +39,7 @@ function [Geo, Set] = InitGeo(Geo, Set)
  	Twg = idxs(Twg);
 
 	%% Populate the Geo struct
-	CellFields = ["X", "T", "Y", "Area", "Peri", "globalIds", "cglobalIds"];
+	CellFields = ["X", "T", "Y", "Area", "Peri", "globalIds", "cglobalIds", "dividing", "polar"];
 
 	% Build the Cells struct Array
 	Geo.Cells = BuildStructArray(length(X), CellFields);
@@ -47,6 +47,8 @@ function [Geo, Set] = InitGeo(Geo, Set)
 	for c = 1:length(X)
 		Geo.Cells(c).X = X(c,:);
 		Geo.Cells(c).T = Twg(any(ismember(Twg,c),2),:);
+		Geo.Cells(c).dividing = false;
+		Geo.Cells(c).polar = [0,0];
 	end
 
 	for c = 1:Geo.nCells
