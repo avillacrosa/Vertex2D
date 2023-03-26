@@ -1,6 +1,6 @@
 function [Geo, Mat, Set] = Propulsion()
-    Geo.nx = 10;
-    Geo.ny = 10;
+    Geo.nx = 5;
+    Geo.ny = 5;
 
 	Set.RemodelTol = 0.0001;
 	Set.lambdaA	= 2;

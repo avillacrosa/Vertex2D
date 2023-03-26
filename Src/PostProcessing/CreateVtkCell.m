@@ -35,7 +35,8 @@ function CreateVtkCell(Geo_0, Geo, Set, Step)
 
 		for numTries=1:nY
         	cells_type = cells_type + sprintf('%d\n',5);
-			dA = (Geo.Cells(c).Area-Geo_0.Cells(c).Area)/(Geo_0.Cells(c).Area);
+% 			dA = (Geo.Cells(c).Area-Geo_0.Cells(c).Area)/(Geo_0.Cells(c).Area);
+            dA = 0;
 			data     = data + sprintf("%f \n", dA);
 			data_id  = data_id + sprintf("%d \n", c);
 		end
