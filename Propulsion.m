@@ -10,11 +10,11 @@ function [Geo, Mat, Set] = Propulsion()
 	% TODO FIXME, hard-code case, should be implemented as in V-TFM to get
 	% the planes being moved and what not...
 	
-	Set.tend			= 350;
-	Set.Nincr			= 350;
+	Set.tend			= 50;
+	Set.Nincr			= 50;
 	Set.DivideFreq      = 1;
 	Set.v0 = 0.1;
     Set.MaxIter = 50;
-	Set.OutputFolder='Result/Propulsion';
+	Set.OutputFolder='Propulsion';
     Mat = struct();
 end

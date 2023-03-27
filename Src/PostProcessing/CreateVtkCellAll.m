@@ -33,14 +33,14 @@ function CreateVtkCellAll(Geo_0, Geo, Set, Step)
 		for ci = 1:max((nY-1),0)
 			cells    = cells + sprintf("3 %d %d %d\n",...
 					        	ci-1+nYTot, ci+nYTot, nY+nYTot);
-% 			dA = (Geo.Cells(c).Area-Geo_0.Cells(c).Area)/(Geo_0.Cells(c).Area);
-            dA = 0; 
+			dA = (Geo.Cells(c).Area-Geo_0.Cells(c).Area)/(Geo_0.Cells(c).Area);
+%             dA = 0; 
 			data     = data + sprintf("%f \n", dA);
 			data_id  = data_id + sprintf("%d \n", ids(c));
 
 		end
-% 		dA = (Geo.Cells(c).Area-Geo_0.Cells(c).Area)/(Geo_0.Cells(c).Area);
-        dA = 0;
+		dA = (Geo.Cells(c).Area-Geo_0.Cells(c).Area)/(Geo_0.Cells(c).Area);
+%         dA = 0;
 		data     = data + sprintf("%f \n", dA);
 		data_id  = data_id + sprintf("%d \n", ids(c));
 		cells    = cells + sprintf("3 %d %d %d\n",...

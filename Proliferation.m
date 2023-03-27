@@ -10,8 +10,8 @@ function [Geo, Mat, Set] = Proliferation()
 	% TODO FIXME, hard-code case, should be implemented as in V-TFM to get
 	% the planes being moved and what not...
 	
-	Set.tend			= 2;
-	Set.Nincr			= 2;
+	Set.tend			= 50;
+	Set.Nincr			= 50;
 	Set.DivideFreq      = 1;
     Set.MaxIter = 50;
 	Set.OutputFolder='Proliferation';
