@@ -1,11 +1,11 @@
-function [Geo, Mat, Set] = Propulsion()
-    Geo.nx = 5;
-    Geo.ny = 5;
+function [Geo, Mat, Set] = PropulsionGlass()
+    Geo.nx = 8;
+    Geo.ny = 8;
 
 	Set.RemodelTol = 0.0001;
-	Set.lambdaA	= 2;
+	Set.lambdaA	= 5;
 	Set.lambdaP	= 0.5;
-	Set.lambdaL	= -0.0001;
+	Set.lambdaL	= 0;
 
 	% TODO FIXME, hard-code case, should be implemented as in V-TFM to get
 	% the planes being moved and what not...
@@ -13,8 +13,8 @@ function [Geo, Mat, Set] = Propulsion()
 	Set.tend			= 50;
 	Set.Nincr			= 50;
 	Set.DivideFreq      = 1;
-	Set.v0 = 0.1;
+	Set.v0 = 0.5;
     Set.MaxIter = 50;
-	Set.OutputFolder='Propulsion';
+	Set.OutputFolder='PropulsionGlass';
     Mat = struct();
 end
