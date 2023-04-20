@@ -3,7 +3,7 @@ function [alpha]=LineSearch(Geo_0, Geo_n, Geo, Dofs, Set, gc, dy)
 	dy_reshaped = reshape(dy, 2, (Geo.numY+Geo.nCells))';
 	
 	[Geo] = UpdateVertices(Geo, dy_reshaped);
-	Geo   = UpdateMeasures(Geo);
+	Geo   = UpdateMeasures(Geo, Set);
 
 	g=KgGlobal(Geo_0, Geo_n, Geo, Set);
 	dof = Dofs.Free;

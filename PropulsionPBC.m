@@ -1,6 +1,6 @@
 function [Geo, Mat, Set] = PropulsionPBC()
-    Geo.nx = 8;
-    Geo.ny = 8;
+    Geo.nx = 2;
+    Geo.ny = 2;
 
 	Set.RemodelTol = 0.0001;
 	Set.lambdaA	= 5;
@@ -15,8 +15,8 @@ function [Geo, Mat, Set] = PropulsionPBC()
 	Set.DivideFreq      = 1;
 	Set.v0 = 0.5;
 	Set.BC = 'periodic';
-	Set.Box = 10;
+	Set.Box = 8;
     Set.MaxIter = 50;
-	Set.OutputFolder='PropulsionGlass';
+	Set.OutputFolder='PropulsionPBC';
     Mat = struct();
 end

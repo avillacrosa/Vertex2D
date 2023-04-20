@@ -34,13 +34,11 @@ function CreateVtkCellAll(Geo_0, Geo, Set, Step)
 			cells    = cells + sprintf("3 %d %d %d\n",...
 					        	ci-1+nYTot, ci+nYTot, nY+nYTot);
 			dA = (Geo.Cells(c).Area-Geo_0.Cells(c).Area)/(Geo_0.Cells(c).Area);
-%             dA = 0; 
 			data     = data + sprintf("%f \n", dA);
 			data_id  = data_id + sprintf("%d \n", ids(c));
 
 		end
 		dA = (Geo.Cells(c).Area-Geo_0.Cells(c).Area)/(Geo_0.Cells(c).Area);
-%         dA = 0;
 		data     = data + sprintf("%f \n", dA);
 		data_id  = data_id + sprintf("%d \n", ids(c));
 		cells    = cells + sprintf("3 %d %d %d\n",...
@@ -51,11 +49,11 @@ function CreateVtkCellAll(Geo_0, Geo, Set, Step)
 	for numTries=1:nYTot-Geo.nCells
     	cells_type = cells_type + sprintf('%d\n',5);
 	end
-	points = sprintf("POINTS %d float\n", nYTot) + points;
-	cells  = sprintf("CELLS %d %d\n",nYTot-Geo.nCells,4*(nYTot-Geo.nCells)) + cells;
-	cells_type = sprintf("CELL_TYPES %d \n", nYTot-Geo.nCells) + cells_type;
-	data = sprintf('SCALARS AreaChange float 1\nLOOKUP_TABLE default\n') + data;
-	data_id = sprintf('CELL_DATA %d\nSCALARS Id float 1\nLOOKUP_TABLE default\n', nYTot-Geo.nCells) + data_id;
+	points		= sprintf("POINTS %d float\n", nYTot) + points;
+	cells		= sprintf("CELLS %d %d\n",nYTot-Geo.nCells,4*(nYTot-Geo.nCells)) + cells;
+	cells_type	= sprintf("CELL_TYPES %d \n", nYTot-Geo.nCells) + cells_type;
+	data		= sprintf('SCALARS AreaChange float 1\nLOOKUP_TABLE default\n') + data;
+	data_id		= sprintf('CELL_DATA %d\nSCALARS Id float 1\nLOOKUP_TABLE default\n', nYTot-Geo.nCells) + data_id;
 
 	fprintf(fout, header + points + cells + cells_type + data_id + data);
 

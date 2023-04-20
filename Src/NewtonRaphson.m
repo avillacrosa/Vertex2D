@@ -17,7 +17,7 @@ function Geo = NewtonRaphson(Geo_0, Geo_n, Geo, Dofs, Set, K, g, numStep, t)
 
     	Geo = UpdateVertices(Geo, dy_reshaped);
 
-		Geo = UpdateMeasures(Geo);
+		Geo = UpdateMeasures(Geo,Set);
 
     	%% Compute K, g
     	[g,K,E]=KgGlobal(Geo_0, Geo_n, Geo, Set);

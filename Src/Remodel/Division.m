@@ -59,10 +59,10 @@ function [Geo_0, Geo_n, Geo] = Division(Geo_0, Geo_n, Geo, Dofs, Set)
 			[Geo_n.Cells(c).Y, Geo_n.Cells(c).T] = ReorderYs(Geo_n.Cells(c));
 			[Geo_n.Cells(cnew).Y, Geo_n.Cells(cnew).T] = ReorderYs(Geo_n.Cells(cnew));
 			%% Update Geo
-			Geo    = BuildGlobalIds(Geo);
-			Geo_n  = BuildGlobalIds(Geo_n); 
-			Geo    = UpdateMeasures(Geo);
-			Geo_n  = UpdateMeasures(Geo_n);
+			Geo    = BuildGlobalIds(Geo,Set);
+			Geo_n  = BuildGlobalIds(Geo_n,Set); 
+			Geo    = UpdateMeasures(Geo,Set);
+			Geo_n  = UpdateMeasures(Geo_n,Set);
 			%% TODO FIXME, Reference state resetted to the one after division
 			% I think this should be fixed at some point?
 			Geo_0 = Geo;

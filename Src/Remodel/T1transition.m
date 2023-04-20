@@ -30,11 +30,11 @@ function [Geo_0, Geo_n, Geo] = T1transition(Geo_0, Geo_n, Geo, Dofs, Set)
 				Geo_n	= ReplaceYs(oldTets, newTets, Geo_n);
 
 				%% Update Geo
-	        	Geo   = BuildGlobalIds(Geo); 
-				Geo_n = BuildGlobalIds(Geo_n);
+	        	Geo   = BuildGlobalIds(Geo,Set); 
+				Geo_n = BuildGlobalIds(Geo_n,Set);
 	
-				Geo   = UpdateMeasures(Geo);
-				Geo_n = UpdateMeasures(Geo_n);
+				Geo   = UpdateMeasures(Geo,Set);
+				Geo_n = UpdateMeasures(Geo_n,Set);
 
 				%% Reset Geo_0 because of remodelling?
 				Geo_0 = Geo;
