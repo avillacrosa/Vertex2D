@@ -4,21 +4,23 @@ function PlotGeo(Geo, full)
 	end
 	figure ;
 	hold on;
-	for c = 1:Geo.nCells
+	for c = 1:size(Geo.Cells,2)
 		Ys = Geo.Cells(c).Y;
 		X  = Geo.Cells(c).X;
 		style = '-*';
-		if any(Geo.Cells(c).YDistance,'all')
-			if full
-				Ys = Ys - Geo.Cells(c).YDistance.*Geo.BoxL;
-			else
-				style = 's';
-			end
+% 		if any(Geo.Cells(c).YDistance,'all')
+% 			if full
+% 				Ys = Ys - Geo.Cells(c).YDistance.*Geo.BoxL;
+% 			else
+% 				style = 's';
+% 			end
+% 		end
+		if ~isempty(Ys)
+			YsP = [Ys; Ys(1,:)];
+			plot(YsP(:,1), YsP(:,2), style, LineWidth=2, MarkerSize=10);
 		end
-		YsP = [Ys; Ys(1,:)];
-
-		plot(YsP(:,1), YsP(:,2), style, LineWidth=2, MarkerSize=10);
-		plot(X(:,1), X(:,2), '-o', LineWidth=2);
+		plot(X(:,1), X(:,2), '-s', LineWidth=2);
+		text(X(:,1)+0.05, X(:,2)+0.05,sprintf("%2d",c), FontSize=12)
 	end
 	if isfield(Geo, 'BoxL')
 		bl = [-Geo.BoxL(1)/2, -Geo.BoxL(2)/2];

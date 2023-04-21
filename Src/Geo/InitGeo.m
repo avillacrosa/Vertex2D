@@ -51,6 +51,6 @@ function [Geo, Set] = InitGeo(Geo, Set)
 	for c = 1:Geo.nCells
 		[Geo.Cells(c).Y,Geo.Cells(c).T] = BuildYFromX(Geo.Cells(c), Geo.Cells);
 	end
-	Geo = BuildGlobalIds(Geo,Set);
-	Geo = UpdateMeasures(Geo,Set);
+	Geo = BuildGlobalIds(Geo);
+	Geo = UpdateMeasures(Geo);
 end
