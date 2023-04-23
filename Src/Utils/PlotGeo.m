@@ -4,7 +4,7 @@ function PlotGeo(Geo, full)
 	end
 	figure ;
 	hold on;
-	for c = 1:size(Geo.Cells,2)
+	for c = 1:length(Geo.Cells)
 		Ys = Geo.Cells(c).Y;
 		X  = Geo.Cells(c).X;
 		style = '-*';
@@ -15,10 +15,10 @@ function PlotGeo(Geo, full)
 % 				style = 's';
 % 			end
 % 		end
-		if ~isempty(Ys)
-			YsP = [Ys; Ys(1,:)];
-			plot(YsP(:,1), YsP(:,2), style, LineWidth=2, MarkerSize=10);
-		end
+% 		if ~isempty(Ys)
+		YsP = [Ys; Ys(1,:)];
+		plot(YsP(:,1), YsP(:,2), style, LineWidth=2, MarkerSize=10);
+% 		end
 		plot(X(:,1), X(:,2), '-s', LineWidth=2);
 		text(X(:,1)+0.05, X(:,2)+0.05,sprintf("%2d",c), FontSize=12)
 	end

@@ -37,7 +37,7 @@ function [Geo, Set] = InitGeoPBC(Geo, Set)
  	Twg = delaunay(X);
 
 	%% Populate the Geo struct
-	CellFields = ["X", "T", "Y", "Area", "Peri", "globalIds", "cglobalIds", "dividing", "polar", "YImage"];
+	CellFields = ["X", "T", "Y", "Area", "Peri", "globalIds", "cglobalIds", "dividing", "polar", "YImage", "ghost"];
 
 	% Build the Cells struct Array
 	Geo.Cells = BuildStructArray(length(X), CellFields);

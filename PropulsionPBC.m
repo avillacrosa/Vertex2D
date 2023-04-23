@@ -1,6 +1,6 @@
 function [Geo, Mat, Set] = PropulsionPBC()
-    Geo.nx = 2;
-    Geo.ny = 2;
+    Geo.nx = 3;
+    Geo.ny = 3;
 
 	Set.RemodelTol = 0.0001;
 	Set.lambdaA	= 5;

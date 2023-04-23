@@ -16,7 +16,6 @@ function Geo = BuildGlobalIds(Geo)
 				face_id = face_ids(id);
 				T = Cell.T(face_id,:);
 				face_id_j	= sum(ismember(CellJ.T,T),2)==3;
-				ci,cj,id
 				gIds(face_id) = CellJ.globalIds(face_id_j);
 			end
 		end
