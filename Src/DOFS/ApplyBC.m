@@ -9,22 +9,5 @@ function [Geo] = ApplyBC(t, Geo, Dofs, Set)
 			Geo.Cells(c).Y(hitsP,1) = Set.BCPrescribed + (t-Set.BCStart)*Set.BCdxdt;
 			Geo.Cells(c).Y(hitsF,1) = Set.BCFix;
 		end
-	elseif strcmpi(Set.BC, 'periodic')
-		for c = 1:Geo.nCells
-			Cell = Geo.Cells(c);
-			Ys = Cell.Y;
-			boxLim = Set.Box;
-			outLeft  = find(Ys(:,1)<-boxLim/2);
-			Geo.Cells(c).Y(outLeft) = Ys(outLeft) + boxLim;
-			
-			outRight = find(Ys(:,1)>boxLim/2);
-			Geo.Cells(c).Y(outRight) = Ys(outRight) - boxLim;
-
-			outBot   = find(Ys(:,2)<-boxLim/2);
-			Geo.Cells(c).Y(outBot) = Ys(outBot) + boxLim;
-			
-			outTop   = find(Ys(:,2)>boxLim/2);
-			Geo.Cells(c).Y(outTop) = Ys(outTop) - boxLim;
-		end
 	end
 end

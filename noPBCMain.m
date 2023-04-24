@@ -6,6 +6,5 @@ addpath(genpath('Src'));
 % [Geo, Mat, Set] = Proliferation;
 % [Geo, Mat, Set] = Propulsion;
 % [Geo, Mat, Set] = PropulsionGlass;
-[Geo, Mat, Set] = PBC;
-% [Geo, Mat, Set] = noPBC;
+[Geo, Mat, Set] = noPBC;
 RunVX(Geo, Mat, Set);

@@ -1,8 +1,7 @@
 function Geo = RunVX(Geo, Mat, Set)
 	Dofs = struct();
     Set  = InitSet(Set);
-%     Geo  = InitGeo(Geo, Set);
-    Geo  = InitGeoPBC(Geo, Set);
+    Geo  = InitGeo(Geo, Set);
 	InitiateOutputFolder(Set);
 	Geo.Remodelling = false;
 	t=0;
@@ -17,12 +16,12 @@ function Geo = RunVX(Geo, Mat, Set)
 		end
 		Dofs = GetDOFs(t, Geo, Dofs, Set);
 		Geo  = ApplyBC(t, Geo, Dofs, Set);
-		Geo  = UpdateMeasures(Geo);
-		Geo  = Polarizations(Geo);
+		Geo  = UpdateMeasures(Geo,Set);
+% 		Geo  = Polarizations(Geo);
 		
 		[g, K, E] = KgGlobal(Geo_0, Geo_n, Geo, Set, Dofs); 
 		Geo = NewtonRaphson(Geo_0, Geo_n, Geo, Dofs, Set, K, g, numStep, t);
-        Geo = BuildXFromY(Geo_n, Geo);
+        Geo = BuildXFromY(Geo_n, Geo, Set);
         PostProcessingVTK(Geo_0, Geo, Set, numStep);
 		fprintf('STEP has converged ...\n')
         t=t+Set.dt;

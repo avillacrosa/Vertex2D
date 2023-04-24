@@ -9,7 +9,7 @@ function [gT,KT,E] = KgGlobal(Geo_0, Geo_n, Geo, Set, Dofs)
 	%% Line Energy
 	[g.gl,K.Kl,E.EL]=KgLine(Geo_0, Geo, Set);
 	%% Propulsion
-	[g.pr,K.Pr,E.Ep]=KgProp(Geo, Set);
+% 	[g.pr,K.Pr,E.Ep]=KgProp(Geo, Set);
     %% Sum and out    
 	[gT, KT] = initializeKg(Geo, Set); 
 	ET = 0;

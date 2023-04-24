@@ -4,8 +4,14 @@ function [g, K, E] = KgLine(Geo_0, Geo, Set)
 	for c = 1:Geo.nCells
 		Cell   = Geo.Cells(c);
         Cell_0 = Geo_0.Cells(c);
-		Ys  = Cell.Y;
-		Ys0 = Cell_0.Y;
+		Ys = Geo.Cells(c).Y;
+		if strcmpi(Set.BC, 'periodic')
+			Ys = Ys - Geo.Cells(c).YImage.*Geo.BoxL;
+		end
+		Ys0 = Geo_0.Cells(c).Y;
+		if strcmpi(Set.BC, 'periodic')
+			Ys0 = Ys0 - Geo_0.Cells(c).YImage.*Geo.BoxL;
+		end
 		ge = zeros(size(g, 1), 1);
         Ke = zeros(size(g, 1));
 		for yi = 1:size(Ys,1)

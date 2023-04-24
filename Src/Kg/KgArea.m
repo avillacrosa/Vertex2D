@@ -6,6 +6,9 @@ function [g, K, E] = KgArea(Geo_0, Geo, Set)
 		Cell0 = Geo_0.Cells(c);
 		X  = Geo.Cells(c).X;
 		Ys = Geo.Cells(c).Y;
+		if strcmpi(Set.BC, 'periodic')
+			Ys = Ys - Geo.Cells(c).YImage.*Geo.BoxL;
+		end
 		Ke = zeros(size(g, 1)); ge = zeros(size(g, 1), 1);
 		factg = Set.lambdaA*(Cell.Area-Cell0.Area)/(Cell0.Area)^2;
 		for t = 1:size(Ys,1)

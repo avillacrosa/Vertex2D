@@ -1,11 +1,12 @@
-function Geo = UpdateMeasures(Geo)
+function Geo = UpdateMeasures(Geo, Set)
 	for c = 1:Geo.nCells
-		% I'm thinking this is probably useless no?
 		Cell = Geo.Cells(c);
-% 		if any(Cell.YDistance,'all')
-% 			Cell.Y = Cell.Y - Cell.YDistance.*Geo.BoxL;
-% 		end
+		if strcmpi(Set.BC, 'periodic')
+			Cell.Y = Cell.Y - Cell.YImage.*Geo.BoxL;
+		end
 		Geo.Cells(c).Area  = ComputeCellArea(Cell); 
 		Geo.Cells(c).Peri  = ComputeCellPeri(Cell);
+% 		c, Geo.Cells(c).Area, Geo.Cells(c).Peri
+% 		fprintf("%d, %.2f, %.2f\n", c, Geo.Cells(c).Area, Geo.Cells(c).Peri);
 	end
 end

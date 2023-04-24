@@ -5,6 +5,9 @@ function [g, K, E] = KgPeri(Geo_0, Geo, Set)
 		Cell = Geo.Cells(c);
         Cell_0 = Geo_0.Cells(c);
 		Ys = Geo.Cells(c).Y;
+		if strcmpi(Set.BC, 'periodic')
+			Ys = Ys - Geo.Cells(c).YImage.*Geo.BoxL;
+		end
 		ge = zeros(size(g, 1), 1);
         Ke = zeros(size(g, 1));
 		for yi = 1:size(Ys,1)

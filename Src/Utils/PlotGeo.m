@@ -21,6 +21,12 @@ function PlotGeo(Geo, full)
 % 		end
 		plot(X(:,1), X(:,2), '-s', LineWidth=2);
 		text(X(:,1)+0.05, X(:,2)+0.05,sprintf("%2d",c), FontSize=12)
+		if ~isempty(Geo.Cells(c).globalIds)
+			for gid = 1:length(Geo.Cells(c).globalIds)
+				text(Ys(gid,1)-0.05, Ys(gid,2)-0.05,sprintf("%2d",Geo.Cells(c).globalIds(gid)), FontSize=12, Color='red')
+			end
+			text(X(:,1)+0.05, X(:,2)-0.05,sprintf("%2d",Geo.Cells(c).cglobalIds), FontSize=12, Color='red')
+		end
 	end
 	if isfield(Geo, 'BoxL')
 		bl = [-Geo.BoxL(1)/2, -Geo.BoxL(2)/2];

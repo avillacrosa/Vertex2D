@@ -5,5 +5,5 @@ function Geo = Polarizations(Geo)
 % 		Geo.Cells(c).polar = ps(c,:);
 % 	end
 % 	Geo.Cells(16).polar = ps(16,:);
-	Geo.Cells(16).polar = [1,0];
+	Geo.Cells(end).polar = [1,0];
 end

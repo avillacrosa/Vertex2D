@@ -1,11 +1,11 @@
-function [Geo, Mat, Set] = PropulsionPBC()
-    Geo.nx = 3;
-    Geo.ny = 3;
+function [Geo, Mat, Set] = noPBC()
+    Geo.nx = 8;
+    Geo.ny = 8;
 
 	Set.RemodelTol = 0.0001;
 	Set.lambdaA	= 5;
 	Set.lambdaP	= 0.5;
-	Set.lambdaL	= 0;
+	Set.lambdaL	= 0.0001;
 
 	% TODO FIXME, hard-code case, should be implemented as in V-TFM to get
 	% the planes being moved and what not...
@@ -13,10 +13,7 @@ function [Geo, Mat, Set] = PropulsionPBC()
 	Set.tend			= 50;
 	Set.Nincr			= 50;
 	Set.DivideFreq      = 1;
-	Set.v0 = 0.5;
-	Set.BC = 'periodic';
-	Set.Box = 8;
     Set.MaxIter = 50;
-	Set.OutputFolder='PropulsionPBC';
+	Set.OutputFolder='NoPBC';
     Mat = struct();
 end

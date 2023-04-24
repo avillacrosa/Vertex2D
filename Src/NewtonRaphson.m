@@ -14,13 +14,12 @@ function Geo = NewtonRaphson(Geo_0, Geo_n, Geo, Dofs, Set, K, g, numStep, t)
     	%% Line search and update mechanical nodes
     	alpha = LineSearch(Geo_0, Geo_n, Geo, Dofs, Set, g, dy);
     	dy_reshaped = reshape(dy * alpha, 2, (Geo.numY+Geo.nCells))';
-
+		
     	Geo = UpdateVertices(Geo, dy_reshaped);
-
-		Geo = UpdateMeasures(Geo);
+		Geo = UpdateMeasures(Geo, Set);
 
     	%% Compute K, g
-    	[g,K,E]=KgGlobal(Geo_0, Geo_n, Geo, Set);
+    	[g, K, E]=KgGlobal(Geo_0, Geo_n, Geo, Set);
 
 		%% Check tolerances and if we are stuck?
     	dyr=norm(dy(dof)); gr=norm(g(dof));
