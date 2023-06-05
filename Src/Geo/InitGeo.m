@@ -35,6 +35,7 @@ function [Geo, Set] = InitGeo(Geo, Set)
 		% Define PBC box
 		maxX = max(X(~XgID,1)); maxY = max(X(~XgID,2));
 		Geo.BoxL = [2*maxX, 2*maxY];
+		Geo.XgID = [];
 	end
 	% Perform Triangulation
  	Twg = delaunay(X);

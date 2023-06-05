@@ -17,7 +17,7 @@ function Geo = RunVX(Geo, Mat, Set)
 		Dofs = GetDOFs(t, Geo, Dofs, Set);
 		Geo  = ApplyBC(t, Geo, Dofs, Set);
 		Geo  = UpdateMeasures(Geo,Set);
-% 		Geo  = Polarizations(Geo);
+		Geo  = Polarizations(Geo);
 		
 		[g, K, E] = KgGlobal(Geo_0, Geo_n, Geo, Set, Dofs); 
 		Geo = NewtonRaphson(Geo_0, Geo_n, Geo, Dofs, Set, K, g, numStep, t);

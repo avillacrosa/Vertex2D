@@ -13,9 +13,9 @@ function [Geo, Mat, Set] = PBC()
 	Set.tend			= 50;
 	Set.Nincr			= 50;
 	Set.DivideFreq      = 1;
-	Set.v0 = 0.5;
+	Set.v0 = 0.1;
 	Set.BC = 'periodic';
     Set.MaxIter = 50;
-	Set.OutputFolder='PBC';
+	Set.OutputFolder='PBC2';
     Mat = struct();
 end
