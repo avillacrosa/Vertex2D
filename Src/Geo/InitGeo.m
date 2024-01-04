@@ -30,7 +30,6 @@ function [Geo, Set] = InitGeo(Geo, Set)
 	% Define as ghost nodes those at the boundary
 	XgID = X(:,1)==max(X(:,1)) | X(:,1)==min(X(:,1)) | X(:,2)==max(X(:,2)) | X(:,2)==min(X(:,2));
 	Geo.nCells = size(X(~XgID,:),1);
-	
 	if strcmpi(Set.BC, 'periodic')
 		% Define PBC box
 		maxX = max(X(~XgID,1)); maxY = max(X(~XgID,2));
@@ -71,7 +70,8 @@ function [Geo, Set] = InitGeo(Geo, Set)
 		cellOrder = [find(~XgID); find(XgID)];
 	end
 	Geo = ReorderCells(Geo, cellOrder);
-    Geo.Cells((Geo.nCells+1):length(Geo.Cells)) = [];
+%     Geo.Cells((Geo.nCells+1):length(Geo.Cells)) = [];
+	Geo.XgID = (Geo.nCells+1):length(Geo.Cells);
 	Geo = UpdateMeasures(Geo, Set);
 	Geo = BuildGlobalIds(Geo);
 end

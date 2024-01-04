@@ -13,6 +13,7 @@ function [Geo, Mat, Set] = noPBC()
 	Set.tend			= 50;
 	Set.Nincr			= 50;
 	Set.DivideFreq      = 1;
+	Set.v0 = 0.1;
     Set.MaxIter = 50;
 	Set.OutputFolder='NoPBC';
     Mat = struct();

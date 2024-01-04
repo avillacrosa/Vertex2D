@@ -1,6 +1,4 @@
 function Geo = BuildXFromY(Geo_n, Geo, Set)
-	
-	XgIds = (Geo.nCells+1):length(Geo.Cells);
 	for c = 1:length(Geo.Cells)
 		% TODO FIXME, seems not optimal.. 2 loops necessary ?
 		Cell = Geo.Cells(c);
@@ -8,7 +6,7 @@ function Geo = BuildXFromY(Geo_n, Geo, Set)
 		if strcmpi(Set.BC, 'periodic')
 			Ys = Ys - Geo.Cells(c).YImage.*Geo.BoxL;
 		end
-    	if any(XgIds==c)
+    	if any(Geo.XgID==c)
         	% Updating a ghost node
         	dY = zeros(size(Geo.Cells(c).T,1), 2);
 			for tet = 1:size(Geo.Cells(c).T,1)
