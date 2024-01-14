@@ -17,10 +17,10 @@ function Geo = NewtonRaphson(Geo_0, Geo_n, Geo, Dofs, Set, K, g, numStep, t)
 		
     	Geo = UpdateVertices(Geo, dy_reshaped);
 		Geo = UpdateMeasures(Geo, Set);
-
     	%% Compute K, g
-    	[g, K, E]=KgGlobal(Geo_0, Geo_n, Geo, Set);
-
+    	[g, K, E, gt, kt]=KgGlobal(Geo_0, Geo_n, Geo, Set);
+%         PlotGeoF(Geo, gt.gE)
+%         close all
 		%% Check tolerances and if we are stuck?
     	dyr=norm(dy(dof)); gr=norm(g(dof));
     	fprintf('Step: % i,Iter: %i, Time: %g ||gr||= %.3e ||dyr||= %.3e alpha= %.3e  nu/nu0=%.3g \n',numStep,iter,t,gr,dyr,alpha,Set.nu/Set.nu0);

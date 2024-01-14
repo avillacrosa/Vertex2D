@@ -1,4 +1,4 @@
-function [gT,KT,E] = KgGlobal(Geo_0, Geo_n, Geo, Set, Dofs)
+function [gT,KT,E,g,K] = KgGlobal(Geo_0, Geo_n, Geo, Set, Dofs)
 	g = struct(); K = struct(); E = struct();
 	%% Surface Energy
 	[g.gs,K.Ks,E.ES]=KgArea(Geo_0, Geo, Set);
@@ -11,14 +11,20 @@ function [gT,KT,E] = KgGlobal(Geo_0, Geo_n, Geo, Set, Dofs)
 	%% Propulsion
 	[g.pr,K.Pr,E.Ep]=KgProp(Geo, Set);
 	%% External Pressure
-% 	[g.pr,K.Pr,E.Ep]=KgPress(Geo, Set);
+% 	[g.gE,K.KE,E.EE]=KgPress(Geo, Set);
     %% Sum and out    
 	[gT, KT] = initializeKg(Geo, Set); 
 	ET = 0;
 	gnames = fieldnames(g); Knames = fieldnames(K); Enames = fieldnames(E);
+%     fprintf("> Max force contributions ")
 	for f = 1:length(fieldnames(g))
+%         fprintf("%s %.3f ",  gnames{f}, max(abs(g.(gnames{f}))))
 		gT = gT + g.(gnames{f});
 		KT = KT + K.(Knames{f});
 		ET = ET + E.(Enames{f});
-	end
+    end
+%     fprintf("\n");
+%     PlotGeoF(Geo, gT)
+%     PlotGeoF(Geo, g.gE)
+%     1
 end

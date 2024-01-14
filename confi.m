@@ -1,11 +1,11 @@
-function [Geo, Mat, Set] = noPBC()
-    Geo.nx = 5;
-    Geo.ny = 5;
+function [Geo, Mat, Set] = confi()
+    Geo.nx = 10;
+    Geo.ny = 10;
 
-	Set.RemodelTol = 0.0001;
-	Set.lambdaA	= 5;
+	Set.RemodelTol = 0.01;
+	Set.lambdaA	= 3;
 	Set.lambdaP	= 0.5;
-	Set.lambdaL	= 0.0001;
+	Set.lambdaL	= 0.001;
 
 	% TODO FIXME, hard-code case, should be implemented as in V-TFM to get
 	% the planes being moved and what not...
@@ -15,6 +15,8 @@ function [Geo, Mat, Set] = noPBC()
 	Set.DivideFreq      = 1;
 	Set.v0 = 0.1;
     Set.MaxIter = 50;
-	Set.OutputFolder='NoPBC';
+    Set.confR = 5;
+    Set.BC = 'confinement';
+	Set.OutputFolder    = 'Confinement';
     Mat = struct();
 end

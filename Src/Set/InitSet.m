@@ -43,6 +43,8 @@ function Set = InitSet(Set)
 	DSet.dt0                        = DSet.tend/DSet.Nincr;
 	DSet.dt                         = DSet.dt0;
 	DSet.Box                        = 1;
+    DSet.iTopo                      = 'square';
+    DSet.confR                      = [];
 	DSet.MaxIter0					= DSet.MaxIter;
 	%% ====================== Add missing fields to Set ===================
 	Set = AddDefault(Set, DSet);
