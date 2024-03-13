@@ -8,7 +8,7 @@ function [g, K, E] = KgProp(Geo, Set)
 		if any(Ni==0)
 			Ni(Ni==0)=1;
 		end
-		ge   = Geo.Cells(c).polar./Ni;
+		ge = Geo.Cells(c).polar./Ni;
 		ge = ge';
 		g  = Assembleg(g,ge(:),YIds);
 	end

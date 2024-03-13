@@ -6,35 +6,34 @@ function Geo = RunVX(Geo, Mat, Set)
 	Geo.Remodelling = false;
 	t=0;
 	Geo_n = Geo; Geo_0 = Geo;
-    PostProcessingVTK(Geo_0, Geo, Set, 0);
 
 	numStep = 1;
-
+    f = PlotGeoF(Geo, Geo_0, false);
+    xlim([-6,6])
+    ylim([-6,6])
+    fout = fullfile(pwd, Set.OutputFolder, sprintf('t_%.2f.png', 0));
+    saveas(f, fout)
 	while t<=Set.tend
         Geo.t = t;
-		if t > 5
-			[Geo_0, Geo_n, Geo] = Remodel(Geo_0, Geo_n, Geo, Dofs, Set);
-		end
+		[Geo_0, Geo_n, Geo] = Remodel(Geo_0, Geo_n, Geo, Dofs, Set);
 		Dofs = GetDOFs(t, Geo, Dofs, Set);
-        PlotGeoF(Geo);
 		Geo  = ApplyBC(t, Geo, Dofs, Set);
-        PlotGeoF(Geo);
 		Geo  = UpdateMeasures(Geo,Set);
-		Geo  = Polarizations(Geo);
+		Geo  = Polarizations(Geo,Set);
 		
-		[g, K, E] = KgGlobal(Geo_0, Geo_n, Geo, Set, Dofs); 
-		Geo = NewtonRaphson(Geo_0, Geo_n, Geo, Dofs, Set, K, g, numStep, t);
+		[g0, K0, E] = KgGlobal(Geo_0, Geo_n, Geo, Set, Dofs); 
+		Geo = NewtonRaphson(Geo_0, Geo_n, Geo, Dofs, Set, K0, g0, numStep, t);
         Geo = BuildXFromY(Geo_n, Geo, Set);
-        [g, K, E, gt, kt] = KgGlobal(Geo_0, Geo_n, Geo, Set, Dofs); 
-        f = PlotGeoF(Geo, g, Geo_0, false);
-	    fout = fullfile(pwd, Set.OutputFolder, sprintf('t_%.2f.png', t));
-        saveas(f, fout)
-%         pause(2)
-%         close all
-%         PostProcessingVTK(Geo_0, Geo, Set, numStep);
-		fprintf('STEP has converged ...\n')
+
         t=t+Set.dt;
         numStep=numStep+1;
         Geo_n = Geo;
+        f = PlotGeoF(Geo, Geo_0, false, -g0);
+        xlim([-6,6])
+        ylim([-6,6])
+	    fout = fullfile(pwd, Set.OutputFolder, sprintf('t_%.2f.png', t));
+        saveas(f, fout)
+        % close all
+		fprintf('STEP has converged ...\n')
 	end
 end

@@ -14,10 +14,11 @@ function [Y, T] = BuildYFromX(Cell, Cells)
 	dim = size(Cell.X,2);
 	Tris = Cell.T;
 	Y = zeros(size(Tris,1), dim);
+    T = Cell.T;
 	nverts = size(Tris,1);
 	for i = 1:nverts
-		T = Tris(i,:);
-		x = [Cells(T(1)).X; Cells(T(2)).X; Cells(T(3)).X];
+		Ti = Tris(i,:);
+		x = [Cells(Ti(1)).X; Cells(Ti(2)).X; Cells(Ti(3)).X];
 		Y(i,:)=Y(i,:)+sum(x,1)/3;
 	end
 

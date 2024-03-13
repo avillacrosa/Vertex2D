@@ -20,14 +20,14 @@ function [Dofs] = GetDOFs(t, Geo, Dofs, Set)
 			Dofs.Free(prescIds)		= false;
 			Dofs.Free(fixIds)		= false;
         end
-    elseif strcmpi(Set.BC, 'confinement')
-	    Dofs.FixR = false(Geo.numY,1);
-        for c = 1:Geo.nCells
-			Cell = Geo.Cells(c);
-            Y = Cell.Y;
-            YIds = Cell.globalIds;
-            FixR = vecnorm(Y, 2, 2) >= Set.confR;
-    	    Dofs.FixR(YIds(FixR)) = true;
-        end
+    % elseif strcmpi(Set.BC, 'confinement')
+	%     Dofs.FixR = false(Geo.numY,1);
+    %     for c = 1:Geo.nCells
+		% 	Cell = Geo.Cells(c);
+    %         Y = Cell.Y;
+    %         YIds = Cell.globalIds;
+    %         FixR = vecnorm(Y, 2, 2) >= Set.confR;
+    % 	    Dofs.FixR(YIds(FixR)) = true;
+    %     end
 	end
 end

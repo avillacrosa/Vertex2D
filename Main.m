@@ -1,4 +1,5 @@
 close all; clear; clc;
+% clear; clc;
 addpath(genpath('Src'));
 
 % [Geo, Mat, Set] = Compress;

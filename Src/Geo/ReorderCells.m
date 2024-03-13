@@ -7,10 +7,17 @@ function Geo = ReorderCells(GeoOld, finalCells)
 	end
 	% Update tets
 	GeoMid = Geo;
-    for ci = 1:Geo.nCells
+    % for ci = 1:Geo.nCells
+	% 	for ct = 1:length(finalCells)
+		% 	c = finalCells(ct);
+    % 		Geo.Cells(ci).T(GeoMid.Cells(ci).T==c) = ct;
+	% 	end
+    % end
+    for ci = 1:length(Geo.Cells)
 		for ct = 1:length(finalCells)
 			c = finalCells(ct);
     		Geo.Cells(ci).T(GeoMid.Cells(ci).T==c) = ct;
 		end
-	end
+    end
+    
 end

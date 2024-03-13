@@ -17,10 +17,11 @@ function [Geo_0, Geo_n, Geo] = T1transition(Geo_0, Geo_n, Geo, Dofs, Set)
 
 			if l < Set.RemodelTol
 				oldTets = Ts(nY,:);
-				if any(oldTets(:) > Geo.nCells)
-% 					fprintf("2-2 flip involves a ghost node. Not implemented\n")
-					continue
-				end
+% 				if any(oldTets(:) > Geo.nCells)
+% % 					fprintf("2-2 flip involves a ghost node. Not implemented\n")
+% 					% continue
+%                     % 1
+% 				end
 				connNodes = setxor(oldTets(1,:), oldTets(2,:));
 				dissNodes = intersect(oldTets(1,:), oldTets(2,:));
 				newTets = [connNodes dissNodes(1); connNodes dissNodes(2)];
@@ -30,8 +31,8 @@ function [Geo_0, Geo_n, Geo] = T1transition(Geo_0, Geo_n, Geo, Dofs, Set)
 				Geo_n	= ReplaceYs(oldTets, newTets, Geo_n);
 
 				%% Update Geo
-	        	Geo   = BuildGlobalIds(Geo,Set); 
-				Geo_n = BuildGlobalIds(Geo_n,Set);
+	        	Geo   = BuildGlobalIds(Geo); 
+				Geo_n = BuildGlobalIds(Geo_n);
 	
 				Geo   = UpdateMeasures(Geo,Set);
 				Geo_n = UpdateMeasures(Geo_n,Set);

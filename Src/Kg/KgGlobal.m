@@ -11,7 +11,8 @@ function [gT,KT,E,g,K] = KgGlobal(Geo_0, Geo_n, Geo, Set, Dofs)
 	%% Propulsion
 	[g.pr,K.Pr,E.Ep]=KgProp(Geo, Set);
 	%% External Pressure
-% 	[g.gE,K.KE,E.EE]=KgPress(Geo, Set);
+	% [g.gE,K.KE,E.EE]=KgPress(Geo, Set);
+    [g.gE,K.KE,E.EE]=KgConf(Geo, Set);
     %% Sum and out    
 	[gT, KT] = initializeKg(Geo, Set); 
 	ET = 0;

@@ -1,6 +1,7 @@
 function [Y, T] = ReorderYs(Cell)
 	Tris = Cell.T;
-	nverts = length(Tris);
+	nverts = size(Tris,1);
+    % nverts = length(Tris);
 	Y = Cell.Y;
 	prev_tri = Cell.T(1,:);
 	tri_order = zeros(nverts,1);
